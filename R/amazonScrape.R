@@ -24,9 +24,9 @@ amazonScrape <- function(product_id = NULL, country = "UK", delay = 5){
 
       # How many pages of reviews are there
       num_of_pages_uk <- uk_url %>%
-        read_html() %>%
-        html_nodes("#cm_cr-product_info > div > div.a-text-left.a-fixed-left-grid-col.reviewNumericalSummary.celwidget.a-col-left > div.a-row.a-spacing-medium.averageStarRatingNumerical > span") %>%
-        html_text() %>% as.character() %>% gsub(" .*$", "", .) %>%
+        rvest::read_html() %>%
+        rvest::html_nodes("#cm_cr-product_info > div > div.a-text-left.a-fixed-left-grid-col.reviewNumericalSummary.celwidget.a-col-left > div.a-row.a-spacing-medium.averageStarRatingNumerical > span") %>%
+        rvest::html_text() %>% as.character() %>% gsub(" .*$", "", .) %>%
         as.integer() %>% `/`(10) %>% ceiling()
 
       # Loop through each page
@@ -36,23 +36,23 @@ amazonScrape <- function(product_id = NULL, country = "UK", delay = 5){
 
         Sys.sleep(runif(1, max(delay-2, 0.5), delay))
 
-        df <- read_html(loop_url) %>%
-          html_nodes('.view-point .a-col-left') %>%
-          map_df(~list(Reviewer = html_nodes(.x, '#cm_cr-review_list .a-profile-name') %>%
-               html_text(),
-            Date = html_nodes(.x, '#cm_cr-review_list .review-date') %>%
-              html_text(),
-            Title = html_nodes(.x, '.a-text-bold span') %>%
-              html_text(),
-            Review_Text = html_nodes(.x, '.review-text-content span') %>%
-              html_text(),
-            Review_Score = html_nodes(.x, '#cm_cr-review_list .review-rating') %>%
-              html_text() %>% substr(1, 3) %>% as.numeric()
+        df <- rvest::read_html(loop_url) %>%
+          rvest::html_nodes('.view-point .a-col-left') %>%
+          purrr::map_df(~list(Reviewer = rvest::html_nodes(.x, '#cm_cr-review_list .a-profile-name') %>%
+                                rvest::html_text(),
+            Date = rvest::html_nodes(.x, '#cm_cr-review_list .review-date') %>%
+              rvest::html_text(),
+            Title = rvest::html_nodes(.x, '.a-text-bold span') %>%
+              rvest::html_text(),
+            Review_Text = rvest::html_nodes(.x, '.review-text-content span') %>%
+              rvest::html_text(),
+            Review_Score = rvest::html_nodes(.x, '#cm_cr-review_list .review-rating') %>%
+              rvest::html_text() %>% substr(1, 3) %>% as.numeric()
           )
           )
 
         df$Country <- "UK"
-        df$Date <- dmy(df$Date)
+        df$Date <- lubridate::dmy(df$Date)
         datalist[[page_number]] <- df
 
       }
@@ -68,9 +68,9 @@ amazonScrape <- function(product_id = NULL, country = "UK", delay = 5){
 
     # How many pages of US reviews are there
     num_of_pages_us <- us_url %>%
-      read_html() %>%
-      html_nodes("#cm_cr-product_info > div > div.a-text-left.a-fixed-left-grid-col.reviewNumericalSummary.celwidget.a-col-left > div.a-row.a-spacing-medium.averageStarRatingNumerical > span") %>%
-      html_text() %>% as.character() %>% gsub(" .*$", "", .) %>%
+      rvest::read_html() %>%
+      rvest::html_nodes("#cm_cr-product_info > div > div.a-text-left.a-fixed-left-grid-col.reviewNumericalSummary.celwidget.a-col-left > div.a-row.a-spacing-medium.averageStarRatingNumerical > span") %>%
+      rvest::html_text() %>% as.character() %>% gsub(" .*$", "", .) %>%
       as.integer() %>% `/`(10) %>% ceiling()
 
     # Loop through each US page
@@ -80,23 +80,23 @@ amazonScrape <- function(product_id = NULL, country = "UK", delay = 5){
 
       Sys.sleep(runif(1, max(delay-2, 0.5), delay))
 
-      df <- read_html(loop_url) %>%
-        html_nodes('.view-point .a-col-left') %>%
-        map_df(~list(Reviewer = html_nodes(.x, '#cm_cr-review_list .a-profile-name') %>%
-                       html_text(),
-                     Date = html_nodes(.x, '#cm_cr-review_list .review-date') %>%
-                       html_text(),
-                     Title = html_nodes(.x, '.a-text-bold span') %>%
-                       html_text(),
-                     Review_Text = html_nodes(.x, '.review-text-content span') %>%
-                       html_text(),
-                     Review_Score = html_nodes(.x, '#cm_cr-review_list .review-rating') %>%
-                       html_text() %>% substr(1, 3) %>% as.numeric()
+      df <- rvest::read_html(loop_url) %>%
+        rvest::html_nodes('.view-point .a-col-left') %>%
+        purrr::map_df(~list(Reviewer = rvest::html_nodes(.x, '#cm_cr-review_list .a-profile-name') %>%
+                              rvest::html_text(),
+                     Date = rvest::html_nodes(.x, '#cm_cr-review_list .review-date') %>%
+                       rvest::html_text(),
+                     Title = rvest::html_nodes(.x, '.a-text-bold span') %>%
+                       rvest::html_text(),
+                     Review_Text = rvest::html_nodes(.x, '.review-text-content span') %>%
+                       rvest::html_text(),
+                     Review_Score = rvest::html_nodes(.x, '#cm_cr-review_list .review-rating') %>%
+                       rvest::html_text() %>% substr(1, 3) %>% as.numeric()
         )
         )
 
       df$Country <- "US"
-      df$Date <- dmy(df$Date)
+      df$Date <- lubridate::dmy(df$Date)
       datalist[[page_number]] <- df
 
     }
@@ -104,5 +104,5 @@ amazonScrape <- function(product_id = NULL, country = "UK", delay = 5){
   }
 
   # Bind the lists into a dataframe
-  combined_review_data <- bind_rows(datalist)
+  combined_review_data <- dplyr::bind_rows(datalist)
 }
