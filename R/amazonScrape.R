@@ -1,6 +1,6 @@
-#' A Function for Amazon Review Scraping
+#' A Function for Scraping Amazon Product Reviews
 #'
-#' This function allows you to express your love of cats.
+#' This function scrapes all Amazon product reviews from the UK and/or US sites for a specified product ID.
 #' @param product_id What is the unique, 6 character product ID?
 #' @param country Should the function run for UK, US or Both? Defaults to UK.
 #' @param delay How long in seconds should the function pause between pages? Defaults to 5.
@@ -24,7 +24,7 @@ amazonScrape <- function(product_id = NULL, country = "UK", delay = 5){
 
       # How many pages of reviews are there
       num_of_pages_uk <- uk_url %>%
-        rvest::read_html() %>%
+        xml2::read_html() %>%
         rvest::html_nodes("#cm_cr-product_info > div > div.a-text-left.a-fixed-left-grid-col.reviewNumericalSummary.celwidget.a-col-left > div.a-row.a-spacing-medium.averageStarRatingNumerical > span") %>%
         rvest::html_text() %>% as.character() %>% gsub(" .*$", "", .) %>%
         as.integer() %>% `/`(10) %>% ceiling()
@@ -36,7 +36,7 @@ amazonScrape <- function(product_id = NULL, country = "UK", delay = 5){
 
         Sys.sleep(runif(1, max(delay-2, 0.5), delay))
 
-        df <- rvest::read_html(loop_url) %>%
+        df <- xml2::read_html(loop_url) %>%
           rvest::html_nodes('.view-point .a-col-left') %>%
           purrr::map_df(~list(Reviewer = rvest::html_nodes(.x, '#cm_cr-review_list .a-profile-name') %>%
                                 rvest::html_text(),
@@ -105,4 +105,5 @@ amazonScrape <- function(product_id = NULL, country = "UK", delay = 5){
 
   # Bind the lists into a dataframe
   combined_review_data <- dplyr::bind_rows(datalist)
+  return(combined_review_data)
 }

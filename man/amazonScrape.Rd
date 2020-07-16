@@ -2,7 +2,7 @@
 % Please edit documentation in R/amazonScrape.R
 \name{amazonScrape}
 \alias{amazonScrape}
-\title{A Function for Amazon Review Scraping}
+\title{A Function for Scraping Amazon Product Reviews}
 \usage{
 amazonScrape(product_id = NULL, country = "UK", delay = 5)
 }
@@ -14,7 +14,7 @@ amazonScrape(product_id = NULL, country = "UK", delay = 5)
 \item{delay}{How long in seconds should the function pause between pages? Defaults to 5.}
 }
 \description{
-This function allows you to express your love of cats.
+This function scrapes all Amazon product reviews from the UK and/or US sites for a specified product ID.
 }
 \examples{
 amazonScrape()

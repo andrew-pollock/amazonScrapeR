@@ -13,4 +13,5 @@ Imports:
     dplyr,
     lubridate,
     purrr,
-    rvest
+    rvest,
+    xml2
