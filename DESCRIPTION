@@ -12,6 +12,7 @@ RoxygenNote: 7.1.1
 Imports: 
     dplyr,
     lubridate,
+    magrittr,
     purrr,
     rvest,
     xml2
