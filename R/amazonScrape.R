@@ -4,6 +4,7 @@
 #' @param product_id What is the unique, 6 character product ID?
 #' @param country Should the function run for UK, US or Both? Defaults to UK.
 #' @param delay How long in seconds should the function pause between pages? Defaults to 5.
+#' @importFrom dplyr "%>%"
 #' @keywords amazon
 #' @export
 #' @examples
