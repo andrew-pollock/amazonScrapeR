@@ -1,10 +1,10 @@
 Package: amazonScrapeR
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Easily Scrape Amazon Product Reviews
 Version: 0.1.0
 Author: Andrew Pollock
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: Wrapper for the 'rvest' packages to simplify
+    scraping Amazon product reviews.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
