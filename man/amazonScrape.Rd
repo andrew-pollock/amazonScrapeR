@@ -17,6 +17,6 @@ amazonScrape(product_id = NULL, country = "UK", delay = 5)
 This function scrapes all Amazon product reviews from the UK and/or US sites for a specified product ID.
 }
 \examples{
-amazonScrape()
+amazonScrape("B08SQNY4FS", country = "UK")
 }
 \keyword{amazon}

@@ -8,7 +8,7 @@
 #' @keywords amazon
 #' @export
 #' @examples
-#' amazonScrape()
+#' amazonScrape("B08SQNY4FS", country = "UK")
 
 
 
@@ -97,7 +97,7 @@ amazonScrape <- function(product_id = NULL, country = "UK", delay = 5){
         )
 
       df$Country <- "US"
-      df$Date <- lubridate::dmy(df$Date)
+      df$Date <- lubridate::mdy(df$Date)
       datalist[[page_number]] <- df
 
     }
