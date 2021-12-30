@@ -2,8 +2,8 @@ Package: amazonScrapeR
 Type: Package
 Title: Easily Scrape Amazon Product Reviews
 Version: 0.1.0
-Author: Andrew Pollock
-Maintainer: Andrew Pollock
+Authors@R: person("Andrew", "Pollock", email = "35378088+andrew-pollock@users.noreply.github.com",
+    role = c("aut", "cre"))
 Description: Wrapper for the 'rvest' packages to simplify
     scraping Amazon product reviews.
 License: MIT + file LICENSE
