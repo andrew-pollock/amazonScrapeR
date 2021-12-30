@@ -3,6 +3,7 @@ Type: Package
 Title: Easily Scrape Amazon Product Reviews
 Version: 0.1.0
 Author: Andrew Pollock
+Maintainer: Andrew Pollock
 Description: Wrapper for the 'rvest' packages to simplify
     scraping Amazon product reviews.
 License: MIT + file LICENSE
