@@ -46,8 +46,8 @@ test_that("no columns are completely NULL for US", {
 
 
 test_that("setting country = 'Both' returns UK and US reviews", {
-  expect_gt(nrow(both_test_data[both_test_data$Country == "UK",]), 0)
-  expect_gt(nrow(both_test_data[both_test_data$Country == "US",]), 0)
+  expect_gt(nrow(both_test_data[both_test_data$Country == "UK", ]), 0)
+  expect_gt(nrow(both_test_data[both_test_data$Country == "US", ]), 0)
 })
 
 
