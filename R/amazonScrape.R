@@ -15,7 +15,8 @@
 amazonScrape <- function(product_id = NULL, country = "UK", delay = 5) {
 
   # Create an empty list
-  datalist <- list()
+  ukdatalist <- list()
+  usdatalist <- list()
 
   # Check if it should run on the UK site
   if (country %in% c("UK", "Both")) {
@@ -60,7 +61,7 @@ amazonScrape <- function(product_id = NULL, country = "UK", delay = 5) {
 
         df$Country <- "UK"
         df$Date <- lubridate::dmy(df$Date)
-        datalist[[page_number]] <- df
+        ukdatalist[[page_number]] <- df
 
       }
 
@@ -110,10 +111,19 @@ amazonScrape <- function(product_id = NULL, country = "UK", delay = 5) {
 
       df$Country <- "US"
       df$Date <- lubridate::mdy(df$Date)
-      datalist[[page_number]] <- df
+      usdatalist[[page_number]] <- df
 
     }
 
+  }
+
+  # Combine the datalists if running for UK and US
+  if (country == "Both") {
+    datalist = append(ukdatalist, usdatalist)
+  } else if (country == "UK") {
+    datalist = ukdatalist
+  } else {
+    datalist = usdatalist
   }
 
   # Bind the lists into a dataframe
