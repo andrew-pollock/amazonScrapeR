@@ -1,5 +1,8 @@
 # amazonScrapeR
 
+[![R build status](https://github.com/andrew-pollock/amazonScrapeR/workflows/R-CMD-check/badge.svg)](https://github.com/andrew-pollock/amazonScrapeR/actions?workflow=R-CMD-check)
+
+
 ## Overview
 
 An R package with a basic Amazon review scraping function. Allows the user to scrape all Amazon product reviews from the UK and/or US sites for a specified product ID.
